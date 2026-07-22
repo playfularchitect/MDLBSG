@@ -12,7 +12,7 @@ It can compress files and folders, restore MDLBSG archives, and queue additional
 
 ![Platform](https://img.shields.io/badge/platform-macOS-black?logo=apple&logoColor=white)
 ![Architecture](https://img.shields.io/badge/arch-Apple%20Silicon-black?logo=apple&logoColor=white)
-![Benchmark](https://img.shields.io/badge/benchmark-enwik9%20(1e9%20bytes)-green)
+![Benchmark](https://img.shields.io/badge/benchmark-enwik9%20-green)
 
 
 </div>
