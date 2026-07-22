@@ -1,0 +1,21 @@
+# macOS metadata
+.DS_Store
+._*
+__MACOSX/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+
+# Local build products
+build/
+dist/
+*.o
+*.dSYM/
+
+# Local release archives are uploaded through GitHub Releases
+*.zip
+
+# Local logs and temporary files
+*.log
+*.tmp

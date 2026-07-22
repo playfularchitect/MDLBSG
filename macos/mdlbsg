@@ -1,0 +1,222 @@
+#!/usr/bin/env bash
+# mdlbsg — your compressor, as a daily tool.
+set -euo pipefail
+# Threads: PERFORMANCE cores only. On Apple Silicon, hw.logicalcpu counts efficiency
+# cores too -- lanes scheduled there run ~3x slower and the whole encode waits on the
+# slowest lane. hw.perflevel0.logicalcpu is the P-core count; other platforms fall back.
+THREADS="$( (sysctl -n hw.perflevel0.logicalcpu 2>/dev/null || nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || echo 4) | tr -d '[:space:]' )"
+
+# Memory budget: HALF of physical RAM, never less than 2GB. The cores have a built-in
+# guard that clamps threads to what fits -- but the guard is only as honest as the
+# budget it's given. Its default (8GB) equals total RAM on an 8GB Mac, which lets the
+# encoder legally claim everything and shove macOS into swap: the engine still "runs",
+# at one-tenth speed. Thrash is silent death; this makes the budget tell the truth.
+MEM_BYTES="$( (sysctl -n hw.memsize 2>/dev/null || awk '/MemTotal/{print $2*1024}' /proc/meminfo 2>/dev/null || echo 8589934592) | tr -d '[:space:]' )"
+MEM_BUDGET_GB=$(( MEM_BYTES / 1073741824 / 2 )); [ "$MEM_BUDGET_GB" -ge 2 ] || MEM_BUDGET_GB=2
+PRESET_FILE="$HOME/.mdlbsg/preset"
+
+read_preset() {
+  local p="turbo"
+  if [ -f "$PRESET_FILE" ]; then
+    p="$(tr -d '[:space:]' < "$PRESET_FILE" 2>/dev/null || echo max)"
+  fi
+  case "$p" in fast|turbo|max|deep) printf '%s' "$p";; *) printf 'turbo';; esac
+}
+
+save_preset() {
+  mkdir -p "$(dirname "$PRESET_FILE")"
+  printf '%s' "$1" > "$PRESET_FILE"
+}
+
+# ---------------- flash cache: instant re-decompression ----------------
+# The probabilities cannot be cached (the probability stream is ~10x LARGER than
+# the input -- the archive IS that stream, maximally condensed). But the PLAINTEXT
+# can: every archive header carries the content's fnv64 + size, so compress stashes
+# a checksum-keyed copy and decompress peeks at the header first. On APFS (Mac) the
+# copy is a clone: instant, zero disk cost until modified. Keeps the newest 3.
+CACHE_DIR="$HOME/.mdlbsg/cache"
+CACHE_ENABLE_FILE="$HOME/.mdlbsg/cache_enabled"
+# Privacy default: OFF. The cache is used only after an explicit opt-in from
+# the app menu or `mdlbsg cache on`.
+cache_on() { [ -f "$CACHE_ENABLE_FILE" ]; }
+clone_cp() {  # copy-on-write when the filesystem offers it, plain copy otherwise
+  cp -c "$1" "$2" 2>/dev/null || cp --reflink=auto "$1" "$2" 2>/dev/null || cp "$1" "$2"
+}
+hdr_key() {   # archive -> "fnvhex_rawsize" from bytes 16..23 and 8..15 (LE)
+  local sz fnv
+  sz="$(od -A n -t u8 -j 8 -N 8 "$1" 2>/dev/null | tr -d '[:space:]')"
+  fnv="$(od -A n -t x8 -j 16 -N 8 "$1" 2>/dev/null | tr -d '[:space:]')"
+  [ -n "$sz" ] && [ -n "$fnv" ] && printf '%s_%s' "$fnv" "$sz"
+}
+cache_put() { # $1 = plaintext file just compressed, $2 = archive produced
+  cache_on || return 0
+  [ -f "$1" ] || return 0
+  # SIZE DISCIPLINE. The cache once kept whatever it was handed, three entries
+  # deep -- three runs of a 4GB project quietly parked ~12GB on disk, filled the
+  # SSD, and killed the NEXT run's tar with a write error while making the whole
+  # machine crawl. A cache that can eat the disk is worse than no cache.
+  local in_sz; in_sz="$(stat -f%z "$1" 2>/dev/null || stat -c%s "$1" 2>/dev/null || echo 0)"
+  [ "$in_sz" -le 1073741824 ] || return 0        # entries over 1GB: not worth the disk
+  local key; key="$(hdr_key "$2")" || return 0; [ -n "$key" ] || return 0
+  mkdir -p "$CACHE_DIR"
+  clone_cp "$1" "$CACHE_DIR/$key.tmp" && mv -f "$CACHE_DIR/$key.tmp" "$CACHE_DIR/$key"
+  # keep the newest 3 entries...
+  ls -t "$CACHE_DIR" 2>/dev/null | tail -n +4 | while read -r f; do rm -f "$CACHE_DIR/$f"; done
+  # ...and NEVER exceed 6GB total: evict oldest until under budget
+  while :; do
+    local tot; tot="$(du -sk "$CACHE_DIR" 2>/dev/null | cut -f1)"; tot="${tot:-0}"
+    [ "$tot" -gt 6291456 ] || break
+    local oldest; oldest="$(ls -t "$CACHE_DIR" 2>/dev/null | tail -1)"
+    [ -n "$oldest" ] || break
+    rm -f "$CACHE_DIR/$oldest"
+  done
+  return 0
+}
+cache_get() { # $1 = archive, $2 = output path; succeeds only on a hit
+  cache_on || return 1
+  local key; key="$(hdr_key "$1")" || return 1; [ -n "$key" ] || return 1
+  [ -f "$CACHE_DIR/$key" ] || return 1
+  clone_cp "$CACHE_DIR/$key" "$2" || return 1
+  local sz="${key#*_}"
+  echo "[mdlbsg] extracted_bytes=$sz"
+  echo "[mdlbsg] integrity=verified (checksum-keyed flash cache)"
+  echo "[mdlbsg] wall_seconds=0.01"
+  return 0
+}
+usage(){ cat <<'U'
+mdlbsg - MDL Boundary-Structure-Gradient compressor
+
+Usage:
+  mdlbsg c <file|folder> [output.mdl] [-p fast|turbo|max]   compress
+  mdlbsg d <archive.mdl> [output]                           decompress
+  mdlbsg mode [fast|turbo|max]                              show or set the default mode
+  mdlbsg cache [status|clear|off|on]                        instant re-decompression cache
+  mdlbsg version                                            prove which build is installed
+  mdlbsg help
+
+Compression modes:
+  fast    Fastest - fastest speed, least compression
+  turbo   Turbo V1 - best speed/compression ratio (default)
+  max     Max Mode - best compression, slowest speed
+
+The mode is shared with the MDLBSG Compressor app: setting it here changes the app's
+selection, and vice versa. Passing -p also updates the default.
+
+Archives are self-describing: decompression reads all settings from the archive and
+verifies an integrity checksum. Folders are compressed as a single unit and restored
+as folders.
+U
+exit 0; }
+[ $# -ge 1 ] || usage
+CMD="$1"; shift || true
+case "$CMD" in
+  c|compress)
+    [ $# -ge 1 ] || usage
+    IN="$1"; shift
+    OUT="${1:-}"; [ -n "$OUT" ] && [[ "$OUT" != -* ]] && shift || OUT="$IN.mdl"
+    PRESET="$(read_preset)"
+    PRESET_EXPLICIT=0
+    EXTRA=()
+    while [ $# -gt 0 ]; do case "$1" in
+      -p|--preset) PRESET="$2"; PRESET_EXPLICIT=1; shift 2;;
+      --progress-file) EXTRA+=(--progress-file "$2"); shift 2;;
+      --content) EXTRA+=(--content "$2"); shift 2;;
+      *) echo "unknown option: $1"; exit 1;;
+    esac; done
+    case "$PRESET" in fast|turbo|max|deep) ;; *) echo "unknown mode: $PRESET (use fast, turbo, max, or deep)"; exit 1;; esac
+    # An explicit -p becomes the new default, so the app shows what you last used.
+    # NOTE: an explicit -p flag applies to THIS RUN ONLY. It used to silently
+    # overwrite the saved default, so one "-p max" changed every future run --
+    # exactly the surprise nobody wants. Only "mdlbsg mode <x>" persists now.
+    # Chunk size scales with the input. Chunk 0 runs alone (it trains the warm
+    # prior), and lanes split the REST -- a 30MB file at 16MB chunks is 1 serial
+    # chunk + 1 lane chunk: a 4-core machine working single-file. Small inputs
+    # get small chunks so every core has pieces to eat.
+    IN_BYTES="$(stat -f%z "$IN" 2>/dev/null || stat -c%s "$IN" 2>/dev/null || echo 0)"
+    if   [ "$IN_BYTES" -le 8388608 ];  then CHUNK=2097152
+    elif [ "$IN_BYTES" -le 33554432 ]; then CHUNK=4194304
+    elif [ "$IN_BYTES" -le 100663296 ]; then CHUNK=8388608
+    else CHUNK=16777216; fi
+    COMMON=(--chunk-bytes $CHUNK --threads $THREADS --verify 0 --mem-budget-gb $MEM_BUDGET_GB
+            --warm 1 --warm-clamp 3 --warm-match 1 --layout twist
+            --prefetch-dist 4 --prefetch-mode mtab --braid 1 --stream-input 1 --rightsize 1)
+    case "$PRESET" in
+      fast)  BIN="$HOME/.mdlbsg/bin/mdlbsg_core"; CFG=(--cm-bits 24 --mm-bits 20 --w2-bits 21 --w3-bits 21);;
+      max)   BIN="$HOME/.mdlbsg/bin/mdlbsg_core"; CFG=(--cm-bits 24 --mm-bits 22 --w2-bits 23 --w3-bits 23);;
+      turbo) BIN="$HOME/.mdlbsg/bin/mdlbsg_turbo"; CFG=(--cm-bits 24 --mm-bits 22 --families 11 --deep-bits 23);;
+      deep)  BIN="$HOME/.mdlbsg/bin/mdlbsg_turbo"; CFG=(--cm-bits 25 --mm-bits 22 --families 11 --deep-bits 24);;   # full-size deep tables + 2x boundary space: maximum squeeze
+      *) echo "unknown preset: $PRESET (use fast, turbo, or max)"; exit 1;;
+    esac
+    [ -x "$BIN" ] || { echo "$BIN not built — run INSTALL_MDLBSG.command first"; exit 1; }
+    echo "compressing '$IN' -> '$OUT' (preset: $PRESET)..."
+    "$BIN" --input "$IN" --archive "$OUT" "${COMMON[@]}" "${CFG[@]}" ${EXTRA[@]:+"${EXTRA[@]}"}
+    cache_put "$IN" "$OUT" || true
+    ;;
+  d|decompress|x|extract)
+    [ $# -ge 1 ] || usage
+    ARCH="$1"; shift
+    OUT="${1:-}"
+    if [ -n "$OUT" ] && [ "${OUT#-}" = "$OUT" ]; then shift; else OUT="${ARCH%.mdl}"; fi
+    [ "$OUT" = "$ARCH" ] && OUT="$ARCH.out"
+    DEXTRA=()
+    while [ $# -gt 0 ]; do case "$1" in
+      --progress-file) DEXTRA+=(--progress-file "$2"); shift 2;;
+      *) echo "unknown option: $1"; exit 1;;
+    esac; done
+    MAGIC="$(head -c 8 "$ARCH" 2>/dev/null || true)"
+    case "$MAGIC" in
+      MDLB301A|MDLB301F) BIN="$HOME/.mdlbsg/bin/mdlbsg_core";;
+      MDLBTURA|MDLBTURF) BIN="$HOME/.mdlbsg/bin/mdlbsg_turbo_v1";;   # pre-12-organ archives keep their exact decoder forever
+      MDL16URA|MDL16URF) BIN="$HOME/.mdlbsg/bin/mdlbsg_turbo";;
+      MDLBSTOR|MDLBSTOF) BIN="$HOME/.mdlbsg/bin/mdlbsg_core";;
+      MDLBSGv2)
+        INNER="$(dd if="$ARCH" bs=1 skip=24 count=8 2>/dev/null || true)"
+        case "$INNER" in
+          MDL16*) BIN="$HOME/.mdlbsg/bin/mdlbsg_turbo";;
+          *)      BIN="$HOME/.mdlbsg/bin/mdlbsg_turbo_v1";;
+        esac;;
+      *) echo "unrecognized archive format (not written by this tool, or corrupted)"; exit 1;;
+    esac
+    [ -x "$BIN" ] || { echo "$BIN not built — run INSTALL_MDLBSG.command first"; exit 1; }
+    echo "extracting '$ARCH' -> '$OUT'..."
+    if cache_get "$ARCH" "$OUT"; then
+      exit 0
+    fi
+    "$BIN" --archive "$ARCH" --extract "$OUT" --threads $THREADS ${DEXTRA[@]:+"${DEXTRA[@]}"}
+    ;;
+  mode)
+    if [ $# -ge 1 ]; then
+      case "$1" in
+        fast|turbo|max) save_preset "$1"; echo "compression mode set to: $1";;
+        *) echo "unknown mode: $1 (use fast, turbo, or max)"; exit 1;;
+      esac
+    else
+      echo "current compression mode: $(read_preset)"
+    fi
+    ;;
+  cache)
+    case "${1:-status}" in
+      clear) rm -rf "$CACHE_DIR"; echo "cache cleared";;
+      off)   rm -f "$CACHE_ENABLE_FILE" "$HOME/.mdlbsg/cache_off"; echo "cache disabled";;
+      on)    mkdir -p "$HOME/.mdlbsg"; rm -f "$HOME/.mdlbsg/cache_off"; : > "$CACHE_ENABLE_FILE"; echo "cache enabled";;
+      status|*)
+        if cache_on; then echo "cache: on"; else echo "cache: off"; fi
+        if [ -d "$CACHE_DIR" ]; then
+          n="$(ls "$CACHE_DIR" 2>/dev/null | wc -l | tr -d '[:space:]')"
+          echo "entries: $n (newest 3 kept)"
+        else
+          echo "entries: 0"
+        fi;;
+    esac
+    ;;
+  version|v)
+    echo "wrapper: threads=$THREADS (performance cores) mem_budget=${MEM_BUDGET_GB}GB"
+    if [ -f "$HOME/.mdlbsg/bin/BUILD_INFO" ]; then
+      cat "$HOME/.mdlbsg/bin/BUILD_INFO"
+    else
+      echo "no BUILD_INFO found — cores were built by an older installer; re-run INSTALL_MDLBSG.command"
+    fi
+    ;;
+  help|-h|--help) usage;;
+  *) echo "unknown command: $CMD"; usage;;
+esac

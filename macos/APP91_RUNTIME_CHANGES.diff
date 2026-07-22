@@ -1,0 +1,607 @@
+# App 90 to App 91 focused diff
+
+## Compressor source
+```diff
+--- /mnt/data/MDLBSG_App_90_RELIABLE_OPEN_MENU_RC1_2026-07-22/MDLBSG_CompressorWindow.applescript	2026-07-22 14:43:27.949056209 +0000
++++ /mnt/data/MDLBSG_App_91_APPLET_RUN_HANDLER_FIX_RC1_2026-07-22/MDLBSG_CompressorWindow.applescript	2026-07-22 15:37:59.457174508 +0000
+@@ -7,7 +7,7 @@
+ -- MDLBSG_REENTRANT_DISPATCHER_V86
+ -- MDLBSG_SINGLE_LIVE_QUEUE_V88
+ -- MDLBSG_MENU_CACHE_OPT_IN_V89
+--- MDLBSG_RELIABLE_MENU_APP_V90
++-- MDLBSG_APPLET_RUN_HANDLER_FIX_V91
+ use AppleScript version "2.4"
+ use scripting additions
+ use framework "Foundation"
+@@ -19,7 +19,7 @@
+ property mdlbsgReentrantDispatcherMarker : "MDLBSG_REENTRANT_DISPATCHER_V86"
+ property mdlbsgSingleLiveQueueMarker : "MDLBSG_SINGLE_LIVE_QUEUE_V88"
+ property mdlbsgMenuCacheOptInMarker : "MDLBSG_MENU_CACHE_OPT_IN_V89"
+-property mdlbsgReliableMenuAppMarker : "MDLBSG_RELIABLE_MENU_APP_V90"
++property mdlbsgAppletRunHandlerFixMarker : "MDLBSG_APPLET_RUN_HANDLER_FIX_V91"
+ 
+ on logLaunch(tag)
+ 	try
+@@ -157,7 +157,7 @@
+ 
+ -- The Compressor app itself must never own a modal menu. A modal menu keeps this
+ -- dispatcher process alive and interferes with later file-drop launches.
+--- App 90 therefore opens a separate, real macOS application bundle for the menu.
++-- App 91 therefore opens a separate, real macOS application bundle for the menu.
+ -- Unlike the old bare osascript process, that helper has a Launch Services identity
+ -- and can reliably become the visible frontmost application.
+ on closeMenuHelper()
+@@ -179,7 +179,7 @@
+ 	on error errMsg number errNum
+ 		my logLaunch("menu-app-error " & (errNum as text) & " " & errMsg)
+ 		activate
+-		display dialog "The MDLBSG menu application is missing or could not start." & return & return & "Run RUN_ME_FIRST.command from the App 90 package to repair it." with title "MDLBSG Compressor" buttons {"OK"} default button "OK" with icon caution
++		display dialog "The MDLBSG menu application is missing or could not start." & return & return & "Run RUN_ME_FIRST.command from the App 91 package to repair it." with title "MDLBSG Compressor" buttons {"OK"} default button "OK" with icon caution
+ 	end try
+ end launchMenuHelper
+ 
+```
+
+## Menu source
+```diff
+--- /mnt/data/MDLBSG_App_90_RELIABLE_OPEN_MENU_RC1_2026-07-22/src/launcher_menu_app90.applescript	2026-07-22 14:40:38.229050072 +0000
++++ /mnt/data/MDLBSG_App_91_APPLET_RUN_HANDLER_FIX_RC1_2026-07-22/src/launcher_menu_app91.applescript	2026-07-22 15:37:59.457174508 +0000
+@@ -1,16 +1,17 @@
+--- MDLBSG_NATIVE_MENU_APP_V90
++-- MDLBSG_NATIVE_MENU_APP_V91
+ -- MDLBSG_CACHE_OPT_IN_MENU_V89
+ -- MDLBSG_FRONTMOST_ACTIVATION_V90
++-- MDLBSG_APPLET_RUN_HANDLER_FIX_V91
+ use AppleScript version "2.4"
+ use scripting additions
+ use framework "AppKit"
+ 
+ property compressorBundleID : "com.mdlbsg.compressor"
+-property launcherSelfTestMarker : "MDLBSG_APP90_MENU_APP_SELF_TEST_PASS"
++property launcherSelfTestMarker : "MDLBSG_APP91_MENU_APP_SELF_TEST_PASS"
+ 
+ on logLauncher(tag)
+ 	try
+-		do shell script "mkdir -p ~/.mdlbsg && echo \"$(date '+%Y-%m-%d %H:%M:%S') launcher-v90 " & tag & "\" >> ~/.mdlbsg/launch.log"
++		do shell script "mkdir -p ~/.mdlbsg && echo \"$(date '+%Y-%m-%d %H:%M:%S') launcher-v91 " & tag & "\" >> ~/.mdlbsg/launch.log"
+ 	end try
+ end logLauncher
+ 
+@@ -153,15 +154,10 @@
+ 	do shell script cmd
+ end sendPaths
+ 
+-on run argv
+-	if (count of argv) > 0 then
+-		if item 1 of argv is "--self-test" then return launcherSelfTestMarker
+-		if item 1 of argv is "--self-test-file" and (count of argv) > 1 then
+-			do shell script "/usr/bin/printf '%s' " & quoted form of launcherSelfTestMarker & " > " & quoted form of (item 2 of argv)
+-			return launcherSelfTestMarker
+-		end if
+-	end if
+-
++-- A compiled script application receives a parameterless run event when opened.
++-- The previous `on run argv` form is for osascript command-line arguments and caused
++-- macOS app launches to fail with AppleScript error -1700 before this body started.
++on run
+ 	if my handleBundleSelfTest() then return launcherSelfTestMarker
+ 
+ 	my logLauncher("started")
+```
+
+## Installer and verifier contract changes
+```diff
+--- /mnt/data/MDLBSG_App_90_RELIABLE_OPEN_MENU_RC1_2026-07-22/INSTALL_APP90_RELIABLE_OPEN_MENU.command	2026-07-22 14:43:27.949056209 +0000
++++ /mnt/data/MDLBSG_App_91_APPLET_RUN_HANDLER_FIX_RC1_2026-07-22/INSTALL_APP91_APPLET_RUN_HANDLER_FIX.command	2026-07-22 15:39:23.473177546 +0000
+@@ -5,7 +5,7 @@
+ 
+ SOURCE="$HERE/MDLBSG_CompressorWindow.applescript"
+ WRAPPER_SOURCE="$HERE/mdlbsg"
+-MENU_SOURCE="$HERE/src/launcher_menu_app90.applescript"
++MENU_SOURCE="$HERE/src/launcher_menu_app91.applescript"
+ APP86_INSTALLER="$HERE/INSTALL_APP86_REENTRANT_DISPATCHER.command"
+ APP86_BASE_SOURCE="$HERE/src/MDLBSG_CompressorWindow_APP86_PREREQUISITE.applescript"
+ CONFIGURE_APP="$HERE/configure_app.py"
+@@ -18,12 +18,12 @@
+ 
+ fail() {
+   echo
+-  echo "APP 90 INSTALL FAILED: $*" >&2
++  echo "APP 91 INSTALL FAILED: $*" >&2
+   exit 1
+ }
+ 
+ echo "============================================================"
+-echo "MDLBSG APP 90 — RELIABLE OPEN MENU INSTALLER"
++echo "MDLBSG APP 91 — APPLET RUN-HANDLER FIX INSTALLER"
+ echo "============================================================"
+ echo
+ 
+@@ -58,14 +58,24 @@
+   || fail "App 89 cache-menu marker is missing"
+ 
+ grep -Fq \
+-  'MDLBSG_RELIABLE_MENU_APP_V90' \
++  'MDLBSG_APPLET_RUN_HANDLER_FIX_V91' \
+   "$SOURCE" \
+-  || fail "App 90 reliable-menu marker is missing"
++  || fail "App 91 applet run-handler marker is missing"
+ 
+ grep -Fq \
+-  'MDLBSG_NATIVE_MENU_APP_V90' \
++  'MDLBSG_NATIVE_MENU_APP_V91' \
+   "$MENU_SOURCE" \
+-  || fail "App 90 native menu marker is missing"
++  || fail "App 91 native menu marker is missing"
++
++# A Finder-launched AppleScript applet receives a parameterless run event.
++# `on run argv` is valid for osascript command-line execution, but it is the
++# exact App 90 failure: the applet launch could not coerce the run event to argv.
++grep -Eq '^[[:space:]]*on run[[:space:]]*$' "$MENU_SOURCE" \
++  || fail "native menu source is missing a parameterless run handler"
++
++if grep -Eq '^[[:space:]]*on run[[:space:]]+argv[[:space:]]*$' "$MENU_SOURCE"; then
++  fail "native menu source still contains the broken on run argv handler"
++fi
+ 
+ grep -Fq \
+   'CACHE_ENABLE_FILE=' \
+@@ -82,7 +92,7 @@
+   set -euo pipefail
+ 
+   PREREQ_STAGE="$(
+-    mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app90-app86-prereq.XXXXXX"
++    mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app91-app86-prereq.XXXXXX"
+   )"
+ 
+   cleanup_prerequisite() {
+@@ -112,7 +122,7 @@
+     'MDLBSG_SINGLE_LIVE_QUEUE_V88' \
+     "$PREREQ_PACKAGE/MDLBSG_CompressorWindow.applescript"
+   then
+-    echo "APP 90 INSTALL FAILED: prerequisite staging contains App 88-or-later queue source." >&2
++    echo "APP 91 INSTALL FAILED: prerequisite staging contains App 88-or-later queue source." >&2
+     exit 1
+   fi
+ 
+@@ -236,7 +246,7 @@
+   set -euo pipefail
+ 
+   MENU_STAGE_ROOT="$(
+-    mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app90-menu-stage.XXXXXX"
++    mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app91-menu-stage.XXXXXX"
+   )"
+ 
+   cleanup_menu_stage() {
+@@ -245,19 +255,19 @@
+   trap cleanup_menu_stage EXIT
+ 
+   MENU_STAGE="$MENU_STAGE_ROOT/MDLBSG Menu.app"
+-  MENU_TEXT="$MENU_STAGE_ROOT/menu-app90.applescript"
++  MENU_TEXT="$MENU_STAGE_ROOT/menu-app91.applescript"
+ 
+   /usr/bin/osacompile \
+     -o "$MENU_STAGE" \
+     "$MENU_SOURCE" \
+-    || fail "App 90 native menu application did not compile"
++    || fail "App 91 native menu application did not compile"
+ 
+   python3 \
+     "$CONFIGURE_APP" \
+     "$MENU_STAGE" \
+     "com.mdlbsg.compressor.menu" \
+     "MDLBSG Menu" \
+-    --bundle-version 90 \
++    --bundle-version 91 \
+     --agent \
+     || fail "native menu bundle identity configuration failed"
+ 
+@@ -287,9 +297,9 @@
+     || fail "compiled native menu could not be inspected"
+ 
+   grep -Fq \
+-    'MDLBSG_NATIVE_MENU_APP_V90' \
++    'MDLBSG_NATIVE_MENU_APP_V91' \
+     "$MENU_TEXT" \
+-    || fail "compiled native menu lost its App 90 marker"
++    || fail "compiled native menu lost its App 91 marker"
+ 
+   grep -Fq \
+     'MDLBSG_CACHE_OPT_IN_MENU_V89' \
+@@ -301,6 +311,13 @@
+     "$MENU_TEXT" \
+     || fail "compiled native menu lost frontmost activation"
+ 
++  grep -Eq '^[[:space:]]*on run[[:space:]]*$' "$MENU_TEXT" \
++    || fail "compiled native menu lost the parameterless run handler"
++
++  if grep -Eq '^[[:space:]]*on run[[:space:]]+argv[[:space:]]*$' "$MENU_TEXT"; then
++    fail "compiled native menu still contains the broken on run argv handler"
++  fi
++
+   /usr/bin/python3 - "$MENU_STAGE/Contents/Info.plist" <<'PYMENU'
+ import plistlib
+ import sys
+@@ -311,7 +328,7 @@
+ 
+ expected = {
+     "CFBundleIdentifier": "com.mdlbsg.compressor.menu",
+-    "CFBundleVersion": "90",
++    "CFBundleVersion": "91",
+     "LSUIElement": True,
+ }
+ 
+@@ -326,7 +343,7 @@
+   mv "$MENU_STAGE" "$MENU_APP"
+ )
+ 
+-# Remove the old bare-script helper so App 90 cannot silently fall back to it.
++# Remove the old bare-script helper so App 91 cannot silently fall back to it.
+ rm -f \
+   "$HOME/.mdlbsg/launcher_dialog.applescript" \
+   "$HOME/.mdlbsg/menu_app_self_test_request" \
+@@ -340,16 +357,12 @@
+   "$LSREGISTER_MENU" -f "$MENU_APP" >/dev/null 2>&1 || true
+ fi
+ 
+-MENU_SOURCE_TEST="$(
+-  /usr/bin/osascript \
+-    "$MENU_SOURCE" \
+-    --self-test
+-)"
+-
+-[[ "$MENU_SOURCE_TEST" == *'MDLBSG_APP90_MENU_APP_SELF_TEST_PASS'* ]] \
+-  || fail "native menu source self-test failed"
++# Do not invoke this applet source with osascript arguments. App 90 did that,
++# which masked the fact that a Finder applet launch supplies no argv list.
++grep -Eq '^[[:space:]]*on run[[:space:]]*$' "$MENU_SOURCE" \
++  || fail "native menu parameterless run-handler proof failed"
+ 
+-MENU_BUNDLE_PROOF="$(mktemp "${TMPDIR:-/tmp}/mdlbsg-app90-menu-proof.XXXXXX")"
++MENU_BUNDLE_PROOF="$(mktemp "${TMPDIR:-/tmp}/mdlbsg-app91-menu-proof.XXXXXX")"
+ rm -f "$MENU_BUNDLE_PROOF"
+ 
+ /usr/bin/printf '%s' \
+@@ -362,7 +375,7 @@
+ MENU_BUNDLE_PASS=NO
+ for _ in $(seq 1 80); do
+   if [[ -f "$MENU_BUNDLE_PROOF" ]] && \
+-     grep -Fq 'MDLBSG_APP90_MENU_APP_SELF_TEST_PASS' "$MENU_BUNDLE_PROOF"
++     grep -Fq 'MDLBSG_APP91_MENU_APP_SELF_TEST_PASS' "$MENU_BUNDLE_PROOF"
+   then
+     MENU_BUNDLE_PASS=YES
+     break
+@@ -382,17 +395,17 @@
+   || fail "cache status command failed"
+ 
+ echo "      native menu bundle: INSTALLED"
+-echo "      native menu source self-test: PASS"
++echo "      parameterless applet run handler: PASS"
+ echo "      Launch Services execution: PASS"
+ echo "      frontmost activation marker: PASS"
+ echo "      cache policy: explicit opt-in"
+ echo "      current cache state: $(printf '%s\n' "$CACHE_STATUS" | head -n 1)"
+ 
+ echo
+-echo "[5/8] Compile-testing the App 90 droplet..."
++echo "[5/8] Compile-testing the App 91 droplet..."
+ 
+ STAGE_ROOT="$(
+-  mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app90-stage.XXXXXX"
++  mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app91-stage.XXXXXX"
+ )"
+ 
+ cleanup() {
+@@ -400,18 +413,18 @@
+ }
+ trap cleanup EXIT
+ 
+-TEST_APP="$STAGE_ROOT/App90 Source Test.app"
+-TEST_TEXT="$STAGE_ROOT/app90-source-test.applescript"
++TEST_APP="$STAGE_ROOT/App91 Source Test.app"
++TEST_TEXT="$STAGE_ROOT/app91-source-test.applescript"
+ 
+ /usr/bin/osacompile \
+   -o "$TEST_APP" \
+   "$SOURCE" \
+-  || fail "App 90 AppleScript did not compile"
++  || fail "App 91 AppleScript did not compile"
+ 
+ /usr/bin/osadecompile \
+   "$TEST_APP/Contents/Resources/Scripts/main.scpt" \
+   > "$TEST_TEXT" \
+-  || fail "compiled App 90 source could not be inspected"
++  || fail "compiled App 91 source could not be inspected"
+ 
+ grep -Fq \
+   'MDLBSG_SINGLE_LIVE_QUEUE_V88' \
+@@ -429,9 +442,9 @@
+   || fail "compiled source lost the App 89 cache marker"
+ 
+ grep -Fq \
+-  'MDLBSG_RELIABLE_MENU_APP_V90' \
++  'MDLBSG_APPLET_RUN_HANDLER_FIX_V91' \
+   "$TEST_TEXT" \
+-  || fail "compiled source lost the App 90 reliable-menu marker"
++  || fail "compiled source lost the App 91 applet run-handler marker"
+ 
+ grep -Fq \
+   'MDLBSG Menu.app' \
+@@ -442,22 +455,22 @@
+ echo "      queue routing in compiled source: PASS"
+ 
+ echo
+-echo "[6/8] Building and installing the final App 90 bundle..."
++echo "[6/8] Building and installing the final App 91 bundle..."
+ 
+ FINAL_STAGE="$STAGE_ROOT/MDLBSG Compressor.app"
+ 
+ /usr/bin/osacompile \
+   -o "$FINAL_STAGE" \
+   "$SOURCE" \
+-  || fail "final App 90 bundle did not compile"
++  || fail "final App 91 bundle did not compile"
+ 
+ python3 \
+   "$CONFIGURE_APP" \
+   "$FINAL_STAGE" \
+   "com.mdlbsg.compressor" \
+   "MDLBSG Compressor" \
+-  --bundle-version 90 \
+-  || fail "App 90 bundle identity configuration failed"
++  --bundle-version 91 \
++  || fail "App 91 bundle identity configuration failed"
+ 
+ if [[ -f "$HERE/icons/Compressor.icns" ]]; then
+   cp \
+@@ -473,13 +486,13 @@
+   --force \
+   --sign - \
+   "$FINAL_STAGE" \
+-  || fail "App 90 signing failed"
++  || fail "App 91 signing failed"
+ 
+ /usr/bin/codesign \
+   --verify \
+   --strict \
+   "$FINAL_STAGE" \
+-  || fail "staged App 90 signature verification failed"
++  || fail "staged App 91 signature verification failed"
+ 
+ if [[ -d "/Applications/MDLBSG Compressor.app" ]]; then
+   APPDIR="/Applications"
+@@ -495,7 +508,7 @@
+ FINAL_APP="$APPDIR/MDLBSG Compressor.app"
+ 
+ if [[ -d "$FINAL_APP" ]]; then
+-  BACKUP="$HOME/Downloads/MDLBSG_Compressor_before_App90_$(date '+%Y%m%d_%H%M%S').app"
++  BACKUP="$HOME/Downloads/MDLBSG_Compressor_before_App91_$(date '+%Y%m%d_%H%M%S').app"
+ 
+   cp -R \
+     "$FINAL_APP" \
+@@ -546,7 +559,7 @@
+ echo
+ echo "[8/8] Final installed-build proof..."
+ 
+-INSTALLED_TEXT="$STAGE_ROOT/installed-app90.applescript"
++INSTALLED_TEXT="$STAGE_ROOT/installed-app91.applescript"
+ 
+ /usr/bin/osadecompile \
+   "$FINAL_APP/Contents/Resources/Scripts/main.scpt" \
+@@ -570,9 +583,9 @@
+   || fail "installed app lost the App 89 cache marker"
+ 
+ grep -Fq \
+-  'MDLBSG_RELIABLE_MENU_APP_V90' \
++  'MDLBSG_APPLET_RUN_HANDLER_FIX_V91' \
+   "$INSTALLED_TEXT" \
+-  || fail "installed app lost the App 90 reliable-menu marker"
++  || fail "installed app lost the App 91 applet run-handler marker"
+ 
+ grep -Fq \
+   'MDLBSG Menu.app' \
+@@ -582,16 +595,16 @@
+ [[ -d "$HOME/.mdlbsg/MDLBSG Menu.app" ]] \
+   || fail "installed native menu application is missing"
+ 
+-MENU_INSTALLED_TEXT="$STAGE_ROOT/installed-menu-app90.applescript"
++MENU_INSTALLED_TEXT="$STAGE_ROOT/installed-menu-app91.applescript"
+ /usr/bin/osadecompile \
+   "$HOME/.mdlbsg/MDLBSG Menu.app/Contents/Resources/Scripts/main.scpt" \
+   > "$MENU_INSTALLED_TEXT" \
+   || fail "installed native menu application could not be inspected"
+ 
+ grep -Fq \
+-  'MDLBSG_NATIVE_MENU_APP_V90' \
++  'MDLBSG_NATIVE_MENU_APP_V91' \
+   "$MENU_INSTALLED_TEXT" \
+-  || fail "installed native menu lost its App 90 marker"
++  || fail "installed native menu lost its App 91 marker"
+ 
+ grep -Fq \
+   'MDLBSG_CACHE_OPT_IN_MENU_V89' \
+@@ -603,6 +616,13 @@
+   "$MENU_INSTALLED_TEXT" \
+   || fail "installed native menu lost frontmost activation"
+ 
++grep -Eq '^[[:space:]]*on run[[:space:]]*$' "$MENU_INSTALLED_TEXT" \
++  || fail "installed native menu lost the parameterless run handler"
++
++if grep -Eq '^[[:space:]]*on run[[:space:]]+argv[[:space:]]*$' "$MENU_INSTALLED_TEXT"; then
++  fail "installed native menu still contains the broken on run argv handler"
++fi
++
+ /usr/bin/codesign \
+   --verify \
+   --strict \
+@@ -615,8 +635,8 @@
+     "$FINAL_APP/Contents/Info.plist"
+ )"
+ 
+-[[ "$VERSION" == "90" ]] \
+-  || fail "installed bundle version is $VERSION instead of 90"
++[[ "$VERSION" == "91" ]] \
++  || fail "installed bundle version is $VERSION instead of 91"
+ 
+ /usr/bin/python3 - "$FINAL_APP/Contents/Info.plist" <<'PY'
+ import plistlib
+@@ -646,7 +666,7 @@
+ 
+ if remaining:
+     raise SystemExit(
+-        "APP 90 INSTALL FAILED: unused privacy keys remain: "
++        "APP 91 INSTALL FAILED: unused privacy keys remain: "
+         + ", ".join(remaining)
+     )
+ 
+@@ -657,7 +677,7 @@
+   --verify \
+   --strict \
+   "$FINAL_APP" \
+-  || fail "installed App 90 signature verification failed"
++  || fail "installed App 91 signature verification failed"
+ 
+ LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+ 
+@@ -670,22 +690,22 @@
+ killall Finder >/dev/null 2>&1 || true
+ killall Dock >/dev/null 2>&1 || true
+ 
+-cat > "$BIN/BUILD_INFO_APP90" <<EOF
++cat > "$BIN/BUILD_INFO_APP91" <<EOF
+ built: $(date '+%Y-%m-%d %H:%M:%S')
+-app_version: App 90
++app_version: App 91
+ queue_rule: later drops append to the active queue
+ worker_rule: exactly one queue worker and one progress window
+ processing_rule: queued items run sequentially in submission order
+ statistics_rule: one combined popup after the whole queue finishes
+ post_completion_rule: a new drop closes the previous statistics popup
+-launcher_rule: each open launches a separate native menu app with frontmost activation
++launcher_rule: each open launches a native menu app whose applet run handler accepts the parameterless Finder run event
+ cache_rule: plaintext cache is off unless the user explicitly enables it
+ installed_app: $FINAL_APP
+ EOF
+ 
+ echo
+ echo "============================================================"
+-echo "APP 90 INSTALLED SUCCESSFULLY"
++echo "APP 91 INSTALLED SUCCESSFULLY"
+ echo "============================================================"
+ echo
+ echo "Installed behavior:"
+--- /mnt/data/MDLBSG_App_90_RELIABLE_OPEN_MENU_RC1_2026-07-22/VERIFY_APP90_RELEASE.command	2026-07-22 14:43:28.097056214 +0000
++++ /mnt/data/MDLBSG_App_91_APPLET_RUN_HANDLER_FIX_RC1_2026-07-22/VERIFY_APP91_RELEASE.command	2026-07-22 15:39:23.473177546 +0000
+@@ -3,12 +3,12 @@
+ 
+ fail() {
+   echo
+-  echo "APP 90 RELEASE VERIFICATION FAILED: $*" >&2
++  echo "APP 91 RELEASE VERIFICATION FAILED: $*" >&2
+   exit 1
+ }
+ 
+ echo "============================================================"
+-echo "MDLBSG APP 90 — NON-DESTRUCTIVE RELEASE VERIFICATION"
++echo "MDLBSG APP 91 — NON-DESTRUCTIVE RELEASE VERIFICATION"
+ echo "============================================================"
+ echo
+ 
+@@ -36,10 +36,10 @@
+ [[ -x "$WRAPPER" ]] || fail "command wrapper is missing"
+ 
+ VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PLIST")"
+-[[ "$VERSION" == "90" ]] || fail "bundle version is $VERSION instead of 90"
++[[ "$VERSION" == "91" ]] || fail "bundle version is $VERSION instead of 91"
+ 
+ MENU_VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$MENU_PLIST")"
+-[[ "$MENU_VERSION" == "90" ]] || fail "menu bundle version is $MENU_VERSION instead of 90"
++[[ "$MENU_VERSION" == "91" ]] || fail "menu bundle version is $MENU_VERSION instead of 91"
+ 
+ MENU_ID="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$MENU_PLIST")"
+ [[ "$MENU_ID" == "com.mdlbsg.compressor.menu" ]] \
+@@ -48,39 +48,45 @@
+ MENU_AGENT="$(/usr/libexec/PlistBuddy -c 'Print :LSUIElement' "$MENU_PLIST")"
+ [[ "$MENU_AGENT" == "true" ]] || fail "native menu is not configured as a UI agent"
+ 
+-TMP="$(mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app90-release-proof.XXXXXX")"
++TMP="$(mktemp -d "${TMPDIR:-/tmp}/mdlbsg-app91-release-proof.XXXXXX")"
+ cleanup() {
+   rm -f "$HOME/.mdlbsg/menu_app_self_test_request"
+   rm -rf "$TMP"
+ }
+ trap cleanup EXIT
+ 
+-/usr/bin/osadecompile "$MAIN" > "$TMP/app90.applescript" \
++/usr/bin/osadecompile "$MAIN" > "$TMP/app91.applescript" \
+   || fail "installed Compressor AppleScript could not be decompiled"
+ 
+-/usr/bin/osadecompile "$MENU_MAIN" > "$TMP/menu-app90.applescript" \
++/usr/bin/osadecompile "$MENU_MAIN" > "$TMP/menu-app91.applescript" \
+   || fail "installed native menu AppleScript could not be decompiled"
+ 
+-grep -Fq 'MDLBSG_SINGLE_LIVE_QUEUE_V88' "$TMP/app90.applescript" \
++grep -Fq 'MDLBSG_SINGLE_LIVE_QUEUE_V88' "$TMP/app91.applescript" \
+   || fail "App 88 queue marker is missing"
+-grep -Fq 'MDLBSG_MENU_CACHE_OPT_IN_V89' "$TMP/app90.applescript" \
++grep -Fq 'MDLBSG_MENU_CACHE_OPT_IN_V89' "$TMP/app91.applescript" \
+   || fail "App 89 cache marker is missing"
+-grep -Fq 'MDLBSG_RELIABLE_MENU_APP_V90' "$TMP/app90.applescript" \
+-  || fail "App 90 reliable-menu marker is missing"
+-grep -Fq 'mdlbsg_queue_submit.py' "$TMP/app90.applescript" \
++grep -Fq 'MDLBSG_APPLET_RUN_HANDLER_FIX_V91' "$TMP/app91.applescript" \
++  || fail "App 91 applet run-handler marker is missing"
++grep -Fq 'mdlbsg_queue_submit.py' "$TMP/app91.applescript" \
+   || fail "queue submission routing is missing"
+-grep -Fq 'MDLBSG Menu.app' "$TMP/app90.applescript" \
++grep -Fq 'MDLBSG Menu.app' "$TMP/app91.applescript" \
+   || fail "native menu app launch routing is missing"
+ 
+-grep -Fq 'MDLBSG_NATIVE_MENU_APP_V90' "$TMP/menu-app90.applescript" \
++grep -Fq 'MDLBSG_NATIVE_MENU_APP_V91' "$TMP/menu-app91.applescript" \
+   || fail "native menu marker is missing"
+-grep -Fq 'MDLBSG_CACHE_OPT_IN_MENU_V89' "$TMP/menu-app90.applescript" \
++grep -Fq 'MDLBSG_CACHE_OPT_IN_MENU_V89' "$TMP/menu-app91.applescript" \
+   || fail "launcher cache menu is missing"
+-grep -Fq 'activateIgnoringOtherApps' "$TMP/menu-app90.applescript" \
++grep -Fq 'activateIgnoringOtherApps' "$TMP/menu-app91.applescript" \
+   || fail "frontmost activation is missing"
+-grep -Fq 'MDLBSG_APP90_MENU_APP_SELF_TEST_PASS' "$TMP/menu-app90.applescript" \
++grep -Fq 'MDLBSG_APP91_MENU_APP_SELF_TEST_PASS' "$TMP/menu-app91.applescript" \
+   || fail "native menu self-test marker is missing"
+ 
++grep -Eq '^[[:space:]]*on run[[:space:]]*$' "$TMP/menu-app91.applescript" \
++  || fail "native menu is missing its parameterless applet run handler"
++if grep -Eq '^[[:space:]]*on run[[:space:]]+argv[[:space:]]*$' "$TMP/menu-app91.applescript"; then
++  fail "native menu still contains the broken App 90 on run argv handler"
++fi
++
+ MENU_PROOF="$TMP/menu-bundle-proof.txt"
+ /usr/bin/printf '%s' "$MENU_PROOF" > "$HOME/.mdlbsg/menu_app_self_test_request"
+ /usr/bin/open -n "$MENU_APP" \
+@@ -89,7 +95,7 @@
+ MENU_PASS=NO
+ for _ in $(seq 1 80); do
+   if [[ -f "$MENU_PROOF" ]] && \
+-     grep -Fq 'MDLBSG_APP90_MENU_APP_SELF_TEST_PASS' "$MENU_PROOF"
++     grep -Fq 'MDLBSG_APP91_MENU_APP_SELF_TEST_PASS' "$MENU_PROOF"
+   then
+     MENU_PASS=YES
+     break
+@@ -158,11 +164,12 @@
+ /usr/bin/codesign --verify --strict "$MENU_APP" \
+   || fail "local native-menu signature verification failed"
+ 
+-echo "Compressor bundle version 90: PASS"
+-echo "native menu bundle version 90: PASS"
++echo "Compressor bundle version 91: PASS"
++echo "native menu bundle version 91: PASS"
++echo "native menu parameterless run handler: PASS"
+ echo "native menu Launch Services execution: PASS"
+ echo "native menu frontmost activation marker: PASS"
+-echo "compiled App 90 marker: PASS"
++echo "compiled App 91 marker: PASS"
+ echo "compiled queue routing: PASS"
+ echo "cache policy explicit opt-in: PASS"
+ echo "current cache state: $(printf '%s\n' "$CACHE_STATUS" | head -n 1)"
+```

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>522</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.mdlbsg.decompress-quickaction</string>
+	<key>CFBundleName</key>
+	<string>Decompress with MDLBSG</string>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Decompress with MDLBSG</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>runWorkflowAsService</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSApplicationIdentifier</key>
+				<string>com.apple.finder</string>
+			</dict>
+			<key>NSSendFileTypes</key>
+			<array>
+				<string>public.item</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
