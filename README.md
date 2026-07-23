@@ -2,7 +2,7 @@
 
 # MDLBSG Compressor
 
-**An experimental custom compression application for macOS.**
+**A custom compressor for macOS.**
 
 It can compress files and folders, restore .mdl archives, and queue additional work while another job is already running.
 
