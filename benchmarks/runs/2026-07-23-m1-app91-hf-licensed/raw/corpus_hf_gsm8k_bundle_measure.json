@@ -1,0 +1,29 @@
+{
+  "label": "corpus_hf_gsm8k:folder_bundle",
+  "command": [
+    "/usr/bin/env",
+    "COPYFILE_DISABLE=1",
+    "/usr/bin/tar",
+    "-cf",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_gsm8k/corpus_hf_gsm8k.bundle.tar",
+    "-C",
+    "~/Downloads/MDLBSG_HF_LICENSED_CORPORA_V1/corpora",
+    "corpus_hf_gsm8k"
+  ],
+  "start_utc": "2026-07-23T02:54:20.399566Z",
+  "end_utc": "2026-07-23T02:54:20.521723Z",
+  "wall_seconds": 0.122048917,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 1,
+  "peak_process_tree_rss_bytes_sampled": 294912,
+  "peak_single_process_rss_bytes_sampled": 294912,
+  "processes_at_peak": [
+    {
+      "pid": 61518,
+      "rss_kb": 288,
+      "command": "(bsdtar)"
+    }
+  ]
+}

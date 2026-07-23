@@ -1,0 +1,26 @@
+{
+  "label": "corpus_hf_dolly:folder_unbundle",
+  "command": [
+    "/usr/bin/tar",
+    "-xf",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.restored.tar",
+    "-C",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/restored"
+  ],
+  "start_utc": "2026-07-23T02:54:44.707508Z",
+  "end_utc": "2026-07-23T02:54:44.831649Z",
+  "wall_seconds": 0.124020375,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 1,
+  "peak_process_tree_rss_bytes_sampled": 3096576,
+  "peak_single_process_rss_bytes_sampled": 3096576,
+  "processes_at_peak": [
+    {
+      "pid": 61849,
+      "rss_kb": 3024,
+      "command": "(bsdtar)"
+    }
+  ]
+}

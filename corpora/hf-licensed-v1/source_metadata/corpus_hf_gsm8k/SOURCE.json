@@ -1,0 +1,36 @@
+{
+  "accepted_data_bytes": 5496395,
+  "accepted_rows": 8792,
+  "accepted_rows_by_split": {
+    "test": 1319,
+    "train": 7473
+  },
+  "built_utc": "2026-07-23T01:44:47.793989Z",
+  "configuration": "main",
+  "corpus_name": "corpus_hf_gsm8k",
+  "dataset_card_sha256": "a17e882503578c9e324560630e31017617714ee025c87cf4fea6fd916895f3c1",
+  "dataset_repo": "openai/gsm8k",
+  "dataset_url": "https://huggingface.co/datasets/openai/gsm8k",
+  "datasets_library_version": "4.8.5",
+  "declared_licenses": [
+    "MIT"
+  ],
+  "huggingface_hub_version": "1.24.0",
+  "license_files": [
+    {
+      "name": "MIT",
+      "official_text_url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/MIT.txt",
+      "sha256": "b05785f9f18e6716bab63424b11454513b9943a222595b70411009202fc592b5"
+    }
+  ],
+  "normalization": "UTF-8. JSON corpora use sorted keys, compact separators, one record per line, and add source split/index fields. WikiText preserves raw text records separated by LF.",
+  "pyarrow_version": "24.0.0",
+  "requested_splits": [
+    "train",
+    "test"
+  ],
+  "resolved_revision": "740312add88f781978c0658806c59bc2815b9866",
+  "selection_policy": "Write every row from the pinned train and test splits as canonical JSONL.",
+  "skipped_oversize_rows": 0,
+  "source_platform": "Hugging Face Hub"
+}

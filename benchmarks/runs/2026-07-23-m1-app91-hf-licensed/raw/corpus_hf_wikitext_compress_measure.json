@@ -1,0 +1,34 @@
+{
+  "label": "corpus_hf_wikitext:compress",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "c",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_wikitext/corpus_hf_wikitext.bundle.tar",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_wikitext/corpus_hf_wikitext.mdl",
+    "-p",
+    "turbo",
+    "--content",
+    "folder"
+  ],
+  "start_utc": "2026-07-23T02:51:53.003067Z",
+  "end_utc": "2026-07-23T02:53:03.745902Z",
+  "wall_seconds": 70.744985583,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 539,
+  "peak_process_tree_rss_bytes_sampled": 1970651136,
+  "peak_single_process_rss_bytes_sampled": 1968324608,
+  "processes_at_peak": [
+    {
+      "pid": 60324,
+      "rss_kb": 1922192,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --input ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_wikitext/corpus_hf_wikitext.bundle.tar --archive ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_wikitext/corpus_hf_wikitext.mdl --chunk-bytes 16777216 --threads 4 --verify 0 --mem-budget-gb 4 --warm 1 --warm-clamp 3 --warm-match 1 --layout twist --prefetch-dist 4 --prefetch-mode mtab --braid 1 --stream-input 1 --rightsize 1 --cm-bits 24 --mm-bits 22 --families 11 --deep-bits 23 --content folder"
+    },
+    {
+      "pid": 60309,
+      "rss_kb": 2272,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg c ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_wikitext/corpus_hf_wikitext.bundle.tar ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_wikitext/corpus_hf_wikitext.mdl -p turbo --content folder"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+built: 2026-07-22 07:02:07
+app_version: App 82 (TRUE-DETACH RC1)
+package_marker: MDLBSG_APP_82_TRUE_DETACH_2026_07_21
+installer_path: ~/Downloads/MDLBSG_App_85_FRESH_PROGRESS_WRAPPER_2026-07-22/INSTALL_MDLBSG.command
+compressor_source: ~/Downloads/MDLBSG_App_85_FRESH_PROGRESS_WRAPPER_2026-07-22/MDLBSG_CompressorWindow.applescript
+compressor_source_sha256: 2c17ae0d397bb1e70d2657dccd3d6ae6f19d7fe26b76cb7af3443709dea749a0
+installed_app: /Applications/MDLBSG Compressor.app
+compiled_main_scpt_sha256: 526306903595cdb8602d7d395344690cacb69eb8c041286f746aa3d13b4816b4
+decompiled_results_dialog_count: 1
+staged_equals_installed: YES
+transient_ui: detached launcher helper
+results_detach: native double-fork launcher
+transient_app_quit: YES
+detached_launcher_selftest: PASS
+progress_owner: transient Compressor app (forced quit after handoff)
+compressor_bundle_id: com.mdlbsg.compressor
+decompressor_bundle_id: com.mdlbsg.decompressor
+core_src_sha256: d3411c532481c399d4caf6edcaa3cb2cf7422dbe032d9be7e427da686203c93b
+turbo_src_sha256: 72208457bf6f7002054fa4669a5c57c5b2f6dbe95f338bad4fb076de23ba6b5b

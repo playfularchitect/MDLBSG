@@ -1,0 +1,26 @@
+{
+  "label": "corpus_hf_code_cc0:folder_unbundle",
+  "command": [
+    "/usr/bin/tar",
+    "-xf",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_code_cc0/corpus_hf_code_cc0.restored.tar",
+    "-C",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_code_cc0/restored"
+  ],
+  "start_utc": "2026-07-23T02:55:55.389268Z",
+  "end_utc": "2026-07-23T02:55:55.638021Z",
+  "wall_seconds": 0.248634083,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 2,
+  "peak_process_tree_rss_bytes_sampled": 3112960,
+  "peak_single_process_rss_bytes_sampled": 3112960,
+  "processes_at_peak": [
+    {
+      "pid": 62489,
+      "rss_kb": 3040,
+      "command": "/usr/bin/tar -xf ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_code_cc0/corpus_hf_code_cc0.restored.tar -C ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_code_cc0/restored"
+    }
+  ]
+}

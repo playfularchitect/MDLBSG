@@ -1,0 +1,9 @@
+{
+  "path_basename": "corpus_hf_dolly",
+  "kind": "folder",
+  "regular_files": 6,
+  "directories": 3,
+  "symlinks": 0,
+  "logical_file_bytes": 14000146,
+  "content_structure_sha256": "5df06b9600ff846b48f21650f843bf7310f54f317873219315f8dff060857bee"
+}

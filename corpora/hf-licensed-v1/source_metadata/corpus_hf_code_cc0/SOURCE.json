@@ -1,0 +1,34 @@
+{
+  "accepted_data_bytes": 134283426,
+  "accepted_rows": 10118,
+  "accepted_rows_by_split": {
+    "train": 10118
+  },
+  "built_utc": "2026-07-23T01:44:47.793989Z",
+  "configuration": null,
+  "corpus_name": "corpus_hf_code_cc0",
+  "dataset_card_sha256": "37a11517456cb90943b651b1d0162668f68c4978c26f15e063e0c41816e194da",
+  "dataset_repo": "KoalaAI/GitHub-CC0",
+  "dataset_url": "https://huggingface.co/datasets/KoalaAI/GitHub-CC0",
+  "datasets_library_version": "4.8.5",
+  "declared_licenses": [
+    "CC0-1.0"
+  ],
+  "huggingface_hub_version": "1.24.0",
+  "license_files": [
+    {
+      "name": "CC0-1.0",
+      "official_text_url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    }
+  ],
+  "normalization": "UTF-8. JSON corpora use sorted keys, compact separators, one record per line, and add source split/index fields. WikiText preserves raw text records separated by LF.",
+  "pyarrow_version": "24.0.0",
+  "requested_splits": [
+    "train"
+  ],
+  "resolved_revision": "e7b322c848d90759cc0c5db57dc2e0497357ed41",
+  "selection_policy": "Read the pinned train split in Hub order. Canonicalize each row to JSONL, skip rows larger than 2 MiB, and stop after at least 128 MiB of accepted JSONL has been written.",
+  "skipped_oversize_rows": 37,
+  "source_platform": "Hugging Face Hub"
+}

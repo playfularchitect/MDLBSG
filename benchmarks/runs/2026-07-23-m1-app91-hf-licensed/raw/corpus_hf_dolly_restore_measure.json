@@ -1,0 +1,30 @@
+{
+  "label": "corpus_hf_dolly:restore",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "d",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.mdl",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.restored.tar"
+  ],
+  "start_utc": "2026-07-23T02:54:36.740045Z",
+  "end_utc": "2026-07-23T02:54:44.661496Z",
+  "wall_seconds": 7.921282,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 64,
+  "peak_process_tree_rss_bytes_sampled": 1694875648,
+  "peak_single_process_rss_bytes_sampled": 1692565504,
+  "processes_at_peak": [
+    {
+      "pid": 61783,
+      "rss_kb": 1652896,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --archive ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.mdl --extract ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.restored.tar --threads 4"
+    },
+    {
+      "pid": 61769,
+      "rss_kb": 2256,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg d ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.mdl ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.restored.tar"
+    }
+  ]
+}

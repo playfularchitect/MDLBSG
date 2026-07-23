@@ -1,0 +1,209 @@
+{
+  "built_utc": "2026-07-23T01:44:47.793989Z",
+  "corpora": [
+    {
+      "accepted_data_bytes": 201327105,
+      "accepted_rows": 436221,
+      "accepted_rows_by_split": {
+        "train": 436221
+      },
+      "built_utc": "2026-07-23T01:44:47.793989Z",
+      "configuration": "wikitext-103-raw-v1",
+      "corpus_name": "corpus_hf_wikitext",
+      "corpus_zip": "corpus_hf_wikitext.zip",
+      "corpus_zip_bytes": 71236223,
+      "corpus_zip_sha256": "87e711be3b9e6a5d2fc1854a5fb4721a6c241a6323c467069a67400d7c25a877",
+      "dataset_card_sha256": "d5aabf145d341366745ac703b5844c442c143943b6c77929481395c822b1c28c",
+      "dataset_repo": "Salesforce/wikitext",
+      "dataset_url": "https://huggingface.co/datasets/Salesforce/wikitext",
+      "datasets_library_version": "4.8.5",
+      "declared_licenses": [
+        "CC-BY-SA-3.0",
+        "CC-BY-SA-4.0",
+        "GFDL-1.3"
+      ],
+      "huggingface_hub_version": "1.24.0",
+      "license_files": [
+        {
+          "name": "CC-BY-SA-3.0",
+          "official_text_url": "https://creativecommons.org/licenses/by-sa/3.0/legalcode.txt",
+          "sha256": "3f941b3b89cf7b8370ceb83cc76d2120d471b58735d8ca60238a751a48d7f72f"
+        },
+        {
+          "name": "CC-BY-SA-4.0",
+          "official_text_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
+          "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+        },
+        {
+          "name": "GFDL-1.3",
+          "official_text_url": "https://www.gnu.org/licenses/fdl-1.3.txt",
+          "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4"
+        }
+      ],
+      "logical_file_bytes_before_manifest": 201405589,
+      "manifest_sha256": "305f78f0aab0eb772acca94969287dfb0b28bd5b39556af74fe8a1026486299e",
+      "normalization": "UTF-8. JSON corpora use sorted keys, compact separators, one record per line, and add source split/index fields. WikiText preserves raw text records separated by LF.",
+      "pyarrow_version": "24.0.0",
+      "regular_files": 7,
+      "requested_splits": [
+        "train",
+        "validation",
+        "test"
+      ],
+      "resolved_revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+      "selection_policy": "Read pinned splits in train/validation/test order and write non-empty raw text records until the UTF-8 data file reaches at least 192 MiB.",
+      "skipped_oversize_rows": 0,
+      "source_platform": "Hugging Face Hub"
+    },
+    {
+      "accepted_data_bytes": 5496395,
+      "accepted_rows": 8792,
+      "accepted_rows_by_split": {
+        "test": 1319,
+        "train": 7473
+      },
+      "built_utc": "2026-07-23T01:44:47.793989Z",
+      "configuration": "main",
+      "corpus_name": "corpus_hf_gsm8k",
+      "corpus_zip": "corpus_hf_gsm8k.zip",
+      "corpus_zip_bytes": 1647250,
+      "corpus_zip_sha256": "7aefbba78bfcaf230628147cdef60df25167c759c5306a5d3aac1189e655fcc6",
+      "dataset_card_sha256": "a17e882503578c9e324560630e31017617714ee025c87cf4fea6fd916895f3c1",
+      "dataset_repo": "openai/gsm8k",
+      "dataset_url": "https://huggingface.co/datasets/openai/gsm8k",
+      "datasets_library_version": "4.8.5",
+      "declared_licenses": [
+        "MIT"
+      ],
+      "huggingface_hub_version": "1.24.0",
+      "license_files": [
+        {
+          "name": "MIT",
+          "official_text_url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/MIT.txt",
+          "sha256": "b05785f9f18e6716bab63424b11454513b9943a222595b70411009202fc592b5"
+        }
+      ],
+      "logical_file_bytes_before_manifest": 5507448,
+      "manifest_sha256": "c0b444161a0fa3cc9da30886b46afd24b96f03fce25362f92cf2b9edb6ebbb5b",
+      "normalization": "UTF-8. JSON corpora use sorted keys, compact separators, one record per line, and add source split/index fields. WikiText preserves raw text records separated by LF.",
+      "pyarrow_version": "24.0.0",
+      "regular_files": 5,
+      "requested_splits": [
+        "train",
+        "test"
+      ],
+      "resolved_revision": "740312add88f781978c0658806c59bc2815b9866",
+      "selection_policy": "Write every row from the pinned train and test splits as canonical JSONL.",
+      "skipped_oversize_rows": 0,
+      "source_platform": "Hugging Face Hub"
+    },
+    {
+      "accepted_data_bytes": 13967240,
+      "accepted_rows": 15011,
+      "accepted_rows_by_split": {
+        "train": 15011
+      },
+      "built_utc": "2026-07-23T01:44:47.793989Z",
+      "configuration": null,
+      "corpus_name": "corpus_hf_dolly",
+      "corpus_zip": "corpus_hf_dolly.zip",
+      "corpus_zip_bytes": 4757492,
+      "corpus_zip_sha256": "62ee1d48cfb3ad55e1bce5317d12a192709c2c948388f27e38c435f7260a1a47",
+      "dataset_card_sha256": "db06c60090a11b20e79d1933b2f316f781605f07761ff2ae2795d6523e3e960b",
+      "dataset_repo": "databricks/databricks-dolly-15k",
+      "dataset_url": "https://huggingface.co/datasets/databricks/databricks-dolly-15k",
+      "datasets_library_version": "4.8.5",
+      "declared_licenses": [
+        "CC-BY-SA-3.0"
+      ],
+      "huggingface_hub_version": "1.24.0",
+      "license_files": [
+        {
+          "name": "CC-BY-SA-3.0",
+          "official_text_url": "https://creativecommons.org/licenses/by-sa/3.0/legalcode.txt",
+          "sha256": "3f941b3b89cf7b8370ceb83cc76d2120d471b58735d8ca60238a751a48d7f72f"
+        }
+      ],
+      "logical_file_bytes_before_manifest": 13999733,
+      "manifest_sha256": "f1abcfb358d1e2e059111f2b4bc58f075d544a55ec604aa8b371641615fea414",
+      "normalization": "UTF-8. JSON corpora use sorted keys, compact separators, one record per line, and add source split/index fields. WikiText preserves raw text records separated by LF.",
+      "pyarrow_version": "24.0.0",
+      "regular_files": 5,
+      "requested_splits": [
+        "train"
+      ],
+      "resolved_revision": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+      "selection_policy": "Write every row from the pinned train split as canonical JSONL.",
+      "skipped_oversize_rows": 0,
+      "source_platform": "Hugging Face Hub"
+    },
+    {
+      "accepted_data_bytes": 134283426,
+      "accepted_rows": 10118,
+      "accepted_rows_by_split": {
+        "train": 10118
+      },
+      "built_utc": "2026-07-23T01:44:47.793989Z",
+      "configuration": null,
+      "corpus_name": "corpus_hf_code_cc0",
+      "corpus_zip": "corpus_hf_code_cc0.zip",
+      "corpus_zip_bytes": 20780640,
+      "corpus_zip_sha256": "312e5c95206f89d239a79a92633c55b5ebf43cb6ac6947389e74ef448115ea04",
+      "dataset_card_sha256": "37a11517456cb90943b651b1d0162668f68c4978c26f15e063e0c41816e194da",
+      "dataset_repo": "KoalaAI/GitHub-CC0",
+      "dataset_url": "https://huggingface.co/datasets/KoalaAI/GitHub-CC0",
+      "datasets_library_version": "4.8.5",
+      "declared_licenses": [
+        "CC0-1.0"
+      ],
+      "huggingface_hub_version": "1.24.0",
+      "license_files": [
+        {
+          "name": "CC0-1.0",
+          "official_text_url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+          "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+        }
+      ],
+      "logical_file_bytes_before_manifest": 134294148,
+      "manifest_sha256": "25c53e0b2d2dce61455bf41a93118181f4a683a6655e3c3b0d9a9298d3dcaa8b",
+      "normalization": "UTF-8. JSON corpora use sorted keys, compact separators, one record per line, and add source split/index fields. WikiText preserves raw text records separated by LF.",
+      "pyarrow_version": "24.0.0",
+      "regular_files": 5,
+      "requested_splits": [
+        "train"
+      ],
+      "resolved_revision": "e7b322c848d90759cc0c5db57dc2e0497357ed41",
+      "selection_policy": "Read the pinned train split in Hub order. Canonicalize each row to JSONL, skip rows larger than 2 MiB, and stop after at least 128 MiB of accepted JSONL has been written.",
+      "skipped_oversize_rows": 37,
+      "source_platform": "Hugging Face Hub"
+    }
+  ],
+  "enwik9_release": {
+    "benchmark_description_url": "https://www.mattmahoney.net/dc/textdata.html",
+    "bytes": 1000000000,
+    "hutter_prize_url": "https://prize.hutter1.net/",
+    "included_license_files": [
+      {
+        "name": "CC-BY-SA-3.0",
+        "sha256": "3f941b3b89cf7b8370ceb83cc76d2120d471b58735d8ca60238a751a48d7f72f",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/legalcode.txt"
+      },
+      {
+        "name": "GFDL-1.3",
+        "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+        "url": "https://www.gnu.org/licenses/fdl-1.3.txt"
+      }
+    ],
+    "license_context_url": "https://dumps.wikimedia.org/legal.html",
+    "md5": "e206c3450ac99950df65bf70ef61a12d",
+    "name": "enwik9",
+    "sha1": "2996e86fb978f93cca8f566cc56998923e7fe581",
+    "sha256": "159b85351e5f76e60cbe32e04c677847a9ecba3adc79addab6f4c6c7aa3744bc",
+    "source_description": "The first 1,000,000,000 bytes of the English Wikipedia 2006-03-03 pages/articles XML dump, as defined by the Large Text Compression Benchmark.",
+    "zip": "enwik9_with_source_and_licenses.zip",
+    "zip_bytes": 323958675,
+    "zip_sha256": "723595214a9a98678bf7d3415c7339071812ec6db95ab8a0513e334cfca60652"
+  },
+  "python_version": "3.14.4",
+  "suite_name": "MDLBSG_HF_LICENSED_CORPORA_V1"
+}

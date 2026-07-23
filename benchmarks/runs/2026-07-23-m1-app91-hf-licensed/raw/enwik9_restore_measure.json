@@ -1,0 +1,30 @@
+{
+  "label": "enwik9:restore",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "d",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/enwik9/enwik9.mdl",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/enwik9/enwik9.restored"
+  ],
+  "start_utc": "2026-07-23T02:46:26.517572Z",
+  "end_utc": "2026-07-23T02:51:50.714207Z",
+  "wall_seconds": 324.191493208,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 2396,
+  "peak_process_tree_rss_bytes_sampled": 2317778944,
+  "peak_single_process_rss_bytes_sampled": 2316894208,
+  "processes_at_peak": [
+    {
+      "pid": 57833,
+      "rss_kb": 2262592,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --archive ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/enwik9/enwik9.mdl --extract ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/enwik9/enwik9.restored --threads 4"
+    },
+    {
+      "pid": 57819,
+      "rss_kb": 864,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg d ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/enwik9/enwik9.mdl ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/enwik9/enwik9.restored"
+    }
+  ]
+}

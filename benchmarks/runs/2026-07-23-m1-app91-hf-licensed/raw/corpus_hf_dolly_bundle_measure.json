@@ -1,0 +1,29 @@
+{
+  "label": "corpus_hf_dolly:folder_bundle",
+  "command": [
+    "/usr/bin/env",
+    "COPYFILE_DISABLE=1",
+    "/usr/bin/tar",
+    "-cf",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.bundle.tar",
+    "-C",
+    "~/Downloads/MDLBSG_HF_LICENSED_CORPORA_V1/corpora",
+    "corpus_hf_dolly"
+  ],
+  "start_utc": "2026-07-23T02:54:29.065073Z",
+  "end_utc": "2026-07-23T02:54:29.185680Z",
+  "wall_seconds": 0.12050145899999999,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 1,
+  "peak_process_tree_rss_bytes_sampled": 1163264,
+  "peak_single_process_rss_bytes_sampled": 1163264,
+  "processes_at_peak": [
+    {
+      "pid": 61663,
+      "rss_kb": 1136,
+      "command": "/usr/bin/tar -cf ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_dolly/corpus_hf_dolly.bundle.tar -C ~/Downloads/MDLBSG_HF_LICENSED_CORPORA_V1/corpora corpus_hf_dolly"
+    }
+  ]
+}

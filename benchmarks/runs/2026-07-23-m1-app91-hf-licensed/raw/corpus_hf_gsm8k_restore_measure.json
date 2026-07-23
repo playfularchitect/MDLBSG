@@ -1,0 +1,30 @@
+{
+  "label": "corpus_hf_gsm8k:restore",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "d",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_gsm8k/corpus_hf_gsm8k.mdl",
+    "~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_gsm8k/corpus_hf_gsm8k.restored.tar"
+  ],
+  "start_utc": "2026-07-23T02:54:24.572167Z",
+  "end_utc": "2026-07-23T02:54:28.654451Z",
+  "wall_seconds": 4.082135249999999,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 33,
+  "peak_process_tree_rss_bytes_sampled": 1654439936,
+  "peak_single_process_rss_bytes_sampled": 1652326400,
+  "processes_at_peak": [
+    {
+      "pid": 61610,
+      "rss_kb": 1613600,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --archive ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_gsm8k/corpus_hf_gsm8k.mdl --extract ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_gsm8k/corpus_hf_gsm8k.restored.tar --threads 4"
+    },
+    {
+      "pid": 61596,
+      "rss_kb": 2064,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg d ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_gsm8k/corpus_hf_gsm8k.mdl ~/Downloads/MDLBSG_HF_LICENSED_BENCHMARK_EVIDENCE_2026-07-23_024103Z/work/corpus_hf_gsm8k/corpus_hf_gsm8k.restored.tar"
+    }
+  ]
+}

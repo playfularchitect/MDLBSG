@@ -1,0 +1,9 @@
+{
+  "path_basename": "enwik9",
+  "kind": "file",
+  "regular_files": 1,
+  "directories": 0,
+  "symlinks": 0,
+  "logical_file_bytes": 1000000000,
+  "content_structure_sha256": "ebf77366761056b46e5806b596126c8749090951056bda410a365406bc7de8a9"
+}

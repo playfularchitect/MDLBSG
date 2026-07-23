@@ -6,7 +6,7 @@ This directory contains reproducible benchmark evidence for published MDLBSG res
 
 - [2026-07-23 — Apple M1, App 91, Turbo mode](runs/2026-07-23-m1-app91/BENCHMARK_RESULTS.md)
 
-## What the evidence records
+- [2026-07-23 — Apple M1, App 91, licensed Hugging Face corpus suite](runs/2026-07-23-m1-app91-hf-licensed/BENCHMARK_RESULTS.md)\n\n## What the evidence records
 
 Each run can include:
 

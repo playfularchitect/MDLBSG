@@ -56,7 +56,7 @@ The tested compression paths restore the original data exactly.
 
 ## Technical Details and Measured Results
 
-The first reproducible public benchmark was recorded on **July 23, 2026** using:
+A reproducible public benchmark was recorded on **July 23, 2026** using:
 
 - **Mac:** MacBook Pro (`MacBookPro17,1`)
 - **Processor:** Apple M1
@@ -69,27 +69,26 @@ The first reproducible public benchmark was recorded on **July 23, 2026** using:
 - **Low Power Mode:** Off
 - **Power source during the run:** Battery
 
-The 4 GiB value is an arbitrary compressor memory budget, not a macOS enforced hard ceiling. RAM was sampled across the benchmark command and all descendant processes every 0.10 seconds.
+The 4 GiB value is the compressor's configured memory budget, not a macOS-enforced hard ceiling. Process-tree RAM was sampled every 0.10 seconds.
 
 | Corpus | Files | Encoder input | Archive | Smaller | Core compression time | Speed | Peak compression RAM | Exact restore |
 |---|---:|---:|---:|---:|---:|---:|---:|:---:|
-| `enwik9` | 1 | 1,000,000,000 B | 182,914,445 B | 81.71% | 301.926 s | 3.16 MiB/s | 1.42 GiB | YES |
-| `corpus_game` | 1,703 | 227,555,328 B | 166,429,735 B | 26.86% | 75.134 s | 2.89 MiB/s | 1.66 GiB | YES |
-| `corpus_json` | 2 | 189,788,160 B | 11,557,116 B | 93.91% | 34.948 s | 5.18 MiB/s | 1.78 GiB | YES |
-| `corpus_sealed` | 5 | 45,871,616 B | 42,124,476 B | 8.17% | 7.183 s | 6.09 MiB/s | 1.16 GiB | YES |
-| `corpus_code` | 6,282 | 162,274,304 B | 13,489,866 B | 91.69% | 40.029 s | 3.87 MiB/s | 1.59 GiB | YES |
+| `enwik9` | 1 | 1,000,000,000 B | 182,914,445 B | 81.71% | 303.392 s | 3.14 MiB/s | 1.52 GiB | YES |
+| `corpus_hf_wikitext` | 8 | 201,426,432 B | 41,912,702 B | 79.19% | 69.190 s | 2.78 MiB/s | 1.84 GiB | YES |
+| `corpus_hf_gsm8k` | 6 | 5,524,480 B | 966,166 B | 82.51% | 3.689 s | 1.43 MiB/s | 1.47 GiB | YES |
+| `corpus_hf_dolly` | 6 | 14,016,512 B | 2,659,610 B | 81.03% | 7.119 s | 1.88 MiB/s | 1.56 GiB | YES |
+| `corpus_hf_code_cc0` | 6 | 134,310,400 B | 7,991,022 B | 94.05% | 31.343 s | 4.09 MiB/s | 1.79 GiB | YES |
 
-All five restored outputs matched deterministic source content and path manifests exactly.
+All five restored outputs matched deterministic source content-and-path manifests exactly.
 
-The highest sampled process tree RAM across both compression and restoration was **2.19 GiB**, during `enwik9` restoration.
+The highest sampled compression RAM was **1.84 GiB** on `corpus_hf_wikitext`. The highest sampled process-tree RAM across compression and restoration was **2.16 GiB** during `enwik9` restoration.
 
-For folders, **Encoder input** is the deterministic tar bundle passed to the compressor. The evidence package also records source logical bytes, corpus fingerprints, archive hashes, raw logs, restoration measurements, and exact source/restored manifests.
+For folders, **Encoder input** is the deterministic tar bundle passed to the compressor. The downloadable corpus folders preserve their pinned Hugging Face source revision, dataset card, license materials, construction policy, and SHA-256 manifest.
 
-See the [full reproducible benchmark evidence](benchmarks/runs/2026-07-23-m1-app91/BENCHMARK_RESULTS.md).
+- [Download the licensed benchmark corpora](https://github.com/playfularchitect/MDLBSG/releases/tag/corpora-v1.0.0)
+- [Inspect the full reproducible evidence](benchmarks/runs/2026-07-23-m1-app91-hf-licensed/BENCHMARK_RESULTS.md)
 
----
-
-## What It Currently Does
+---\n\n## What It Currently Does
 
 ### Compress files and folders
 
