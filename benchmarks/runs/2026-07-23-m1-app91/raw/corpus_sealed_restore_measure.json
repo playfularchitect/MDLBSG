@@ -1,0 +1,30 @@
+{
+  "label": "corpus_sealed:restore",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "d",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.mdl",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.restored.tar"
+  ],
+  "start_utc": "2026-07-23T01:00:12.353069Z",
+  "end_utc": "2026-07-23T01:00:20.537622Z",
+  "wall_seconds": 8.184461625,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 66,
+  "peak_process_tree_rss_bytes_sampled": 963100672,
+  "peak_single_process_rss_bytes_sampled": 960724992,
+  "processes_at_peak": [
+    {
+      "pid": 52403,
+      "rss_kb": 938208,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --archive ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.mdl --extract ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.restored.tar --threads 4"
+    },
+    {
+      "pid": 52389,
+      "rss_kb": 2320,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg d ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.mdl ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.restored.tar"
+    }
+  ]
+}

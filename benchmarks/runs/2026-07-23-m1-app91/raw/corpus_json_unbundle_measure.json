@@ -1,0 +1,26 @@
+{
+  "label": "corpus_json:folder_unbundle",
+  "command": [
+    "/usr/bin/tar",
+    "-xf",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.restored.tar",
+    "-C",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/restored"
+  ],
+  "start_utc": "2026-07-23T01:00:03.336546Z",
+  "end_utc": "2026-07-23T01:00:03.461697Z",
+  "wall_seconds": 0.12505225,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 1,
+  "peak_process_tree_rss_bytes_sampled": 2719744,
+  "peak_single_process_rss_bytes_sampled": 2719744,
+  "processes_at_peak": [
+    {
+      "pid": 52262,
+      "rss_kb": 2656,
+      "command": "/usr/bin/tar -xf ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.restored.tar -C ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/restored"
+    }
+  ]
+}

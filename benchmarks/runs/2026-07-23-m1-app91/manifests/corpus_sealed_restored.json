@@ -1,0 +1,9 @@
+{
+  "path_basename": "corpus_sealed",
+  "kind": "folder",
+  "regular_files": 5,
+  "directories": 1,
+  "symlinks": 0,
+  "logical_file_bytes": 45859782,
+  "content_structure_sha256": "23b306a3cbedafd225d02660626dc483d7bcc63e2ba6b29fb9affbf4b8b64d9f"
+}

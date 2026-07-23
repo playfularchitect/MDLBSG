@@ -1,0 +1,26 @@
+{
+  "label": "corpus_sealed:folder_unbundle",
+  "command": [
+    "/usr/bin/tar",
+    "-xf",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.restored.tar",
+    "-C",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/restored"
+  ],
+  "start_utc": "2026-07-23T01:00:20.578444Z",
+  "end_utc": "2026-07-23T01:00:20.703758Z",
+  "wall_seconds": 0.125198,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 1,
+  "peak_process_tree_rss_bytes_sampled": 3309568,
+  "peak_single_process_rss_bytes_sampled": 3309568,
+  "processes_at_peak": [
+    {
+      "pid": 52473,
+      "rss_kb": 3232,
+      "command": "/usr/bin/tar -xf ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.restored.tar -C ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/restored"
+    }
+  ]
+}

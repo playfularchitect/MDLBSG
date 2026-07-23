@@ -23,7 +23,7 @@ It can compress files and folders, restore MDLBSG archives, and queue additional
 **MDLBSG Compressor v0.1 Public Beta**  
 Internal build: **App 91**
 
-See the [release notes](RELEASE_NOTES.md) for the tested behavior, current limitations, package name, and checksum.
+See the [release notes](docs/releases/v0.1.0.md) for the tested behavior, current limitations, package name, and checksum.
 
 ---
 
@@ -51,6 +51,41 @@ The tested compression paths restore the original data exactly.
 
 > [!WARNING]
 > **Fair warning:** This does not mean every possible file, folder, archive, or Mac configuration has been tested, as I have not done extensive testing outside of my own environment.
+
+---
+
+## Technical Details and Measured Results
+
+The first reproducible public benchmark was recorded on **July 23, 2026** using:
+
+- **Mac:** MacBook Pro (`MacBookPro17,1`)
+- **Processor:** Apple M1
+- **Memory:** 8 GiB physical RAM
+- **macOS:** 15.2 (`24C101`)
+- **Mode:** Turbo
+- **Threads:** 4 performance-core threads
+- **Configured compressor memory budget:** 4 GiB
+- **Cache:** Disabled
+- **Low Power Mode:** Off
+- **Power source during the run:** Battery
+
+The 4 GiB value is a compressor memory budget, not a macOS-enforced hard ceiling. RAM was sampled across the benchmark command and all descendant processes every 0.10 seconds.
+
+| Corpus | Files | Encoder input | Archive | Smaller | Core compression time | Speed | Peak compression RAM | Exact restore |
+|---|---:|---:|---:|---:|---:|---:|---:|:---:|
+| `enwik9` | 1 | 1,000,000,000 B | 182,914,445 B | 81.71% | 301.926 s | 3.16 MiB/s | 1.42 GiB | YES |
+| `corpus_game` | 1,703 | 227,555,328 B | 166,429,735 B | 26.86% | 75.134 s | 2.89 MiB/s | 1.66 GiB | YES |
+| `corpus_json` | 2 | 189,788,160 B | 11,557,116 B | 93.91% | 34.948 s | 5.18 MiB/s | 1.78 GiB | YES |
+| `corpus_sealed` | 5 | 45,871,616 B | 42,124,476 B | 8.17% | 7.183 s | 6.09 MiB/s | 1.16 GiB | YES |
+| `corpus_code` | 6,282 | 162,274,304 B | 13,489,866 B | 91.69% | 40.029 s | 3.87 MiB/s | 1.59 GiB | YES |
+
+All five restored outputs matched deterministic source content-and-path manifests exactly.
+
+The highest sampled process-tree RAM across both compression and restoration was **2.19 GiB**, during `enwik9` restoration.
+
+For folders, **Encoder input** is the deterministic tar bundle passed to the compressor. The evidence package also records source logical bytes, corpus fingerprints, archive hashes, raw logs, restoration measurements, and exact source/restored manifests.
+
+See the [full reproducible benchmark evidence](benchmarks/runs/2026-07-23-m1-app91/BENCHMARK_RESULTS.md).
 
 ---
 

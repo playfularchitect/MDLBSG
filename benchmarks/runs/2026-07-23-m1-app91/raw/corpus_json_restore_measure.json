@@ -1,0 +1,30 @@
+{
+  "label": "corpus_json:restore",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "d",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.mdl",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.restored.tar"
+  ],
+  "start_utc": "2026-07-23T00:59:23.173335Z",
+  "end_utc": "2026-07-23T01:00:03.280390Z",
+  "wall_seconds": 40.107105790999995,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 312,
+  "peak_process_tree_rss_bytes_sampled": 1981988864,
+  "peak_single_process_rss_bytes_sampled": 1980399616,
+  "processes_at_peak": [
+    {
+      "pid": 51945,
+      "rss_kb": 1933984,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --archive ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.mdl --extract ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.restored.tar --threads 4"
+    },
+    {
+      "pid": 51931,
+      "rss_kb": 1552,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg d ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.mdl ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_json/corpus_json.restored.tar"
+    }
+  ]
+}

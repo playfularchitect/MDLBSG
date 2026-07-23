@@ -1,0 +1,30 @@
+{
+  "label": "corpus_game:restore",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "d",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.mdl",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.restored.tar"
+  ],
+  "start_utc": "2026-07-23T00:57:23.275303Z",
+  "end_utc": "2026-07-23T00:58:44.148155Z",
+  "wall_seconds": 80.87299583299999,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 633,
+  "peak_process_tree_rss_bytes_sampled": 2054766592,
+  "peak_single_process_rss_bytes_sampled": 2053865472,
+  "processes_at_peak": [
+    {
+      "pid": 50934,
+      "rss_kb": 2005728,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --archive ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.mdl --extract ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.restored.tar --threads 4"
+    },
+    {
+      "pid": 50920,
+      "rss_kb": 880,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg d ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.mdl ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.restored.tar"
+    }
+  ]
+}

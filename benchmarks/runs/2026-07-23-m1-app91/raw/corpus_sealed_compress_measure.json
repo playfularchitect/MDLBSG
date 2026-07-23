@@ -1,0 +1,34 @@
+{
+  "label": "corpus_sealed:compress",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "c",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.bundle.tar",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.mdl",
+    "-p",
+    "turbo",
+    "--content",
+    "folder"
+  ],
+  "start_utc": "2026-07-23T01:00:04.441580Z",
+  "end_utc": "2026-07-23T01:00:12.151498Z",
+  "wall_seconds": 7.709834375,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 62,
+  "peak_process_tree_rss_bytes_sampled": 1249198080,
+  "peak_single_process_rss_bytes_sampled": 1246560256,
+  "processes_at_peak": [
+    {
+      "pid": 52309,
+      "rss_kb": 1217344,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --input ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.bundle.tar --archive ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.mdl --chunk-bytes 8388608 --threads 4 --verify 0 --mem-budget-gb 4 --warm 1 --warm-clamp 3 --warm-match 1 --layout twist --prefetch-dist 4 --prefetch-mode mtab --braid 1 --stream-input 1 --rightsize 1 --cm-bits 24 --mm-bits 22 --families 11 --deep-bits 23 --content folder"
+    },
+    {
+      "pid": 52294,
+      "rss_kb": 2576,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg c ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.bundle.tar ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.mdl -p turbo --content folder"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "label": "enwik9:compress",
+  "command": [
+    "~/.mdlbsg/bin/mdlbsg",
+    "c",
+    "~/Downloads/enwik9",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/enwik9/enwik9.mdl",
+    "-p",
+    "turbo"
+  ],
+  "start_utc": "2026-07-23T00:45:09.921337Z",
+  "end_utc": "2026-07-23T00:50:29.716338Z",
+  "wall_seconds": 319.796364375,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 2388,
+  "peak_process_tree_rss_bytes_sampled": 1529675776,
+  "peak_single_process_rss_bytes_sampled": 1528938496,
+  "processes_at_peak": [
+    {
+      "pid": 45213,
+      "rss_kb": 1493104,
+      "command": "~/.mdlbsg/bin/mdlbsg_turbo --input ~/Downloads/enwik9 --archive ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/enwik9/enwik9.mdl --chunk-bytes 16777216 --threads 4 --verify 0 --mem-budget-gb 4 --warm 1 --warm-clamp 3 --warm-match 1 --layout twist --prefetch-dist 4 --prefetch-mode mtab --braid 1 --stream-input 1 --rightsize 1 --cm-bits 24 --mm-bits 22 --families 11 --deep-bits 23"
+    },
+    {
+      "pid": 45198,
+      "rss_kb": 720,
+      "command": "bash ~/.mdlbsg/bin/mdlbsg c ~/Downloads/enwik9 ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/enwik9/enwik9.mdl -p turbo"
+    }
+  ]
+}

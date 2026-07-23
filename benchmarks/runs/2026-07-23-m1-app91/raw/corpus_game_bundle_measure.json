@@ -1,0 +1,29 @@
+{
+  "label": "corpus_game:folder_bundle",
+  "command": [
+    "/usr/bin/env",
+    "COPYFILE_DISABLE=1",
+    "/usr/bin/tar",
+    "-cf",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.bundle.tar",
+    "-C",
+    "~/Downloads",
+    "corpus_game"
+  ],
+  "start_utc": "2026-07-23T00:56:03.817954Z",
+  "end_utc": "2026-07-23T00:56:04.553830Z",
+  "wall_seconds": 0.735629334,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 6,
+  "peak_process_tree_rss_bytes_sampled": 3637248,
+  "peak_single_process_rss_bytes_sampled": 3637248,
+  "processes_at_peak": [
+    {
+      "pid": 50244,
+      "rss_kb": 3552,
+      "command": "/usr/bin/tar -cf ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.bundle.tar -C ~/Downloads corpus_game"
+    }
+  ]
+}

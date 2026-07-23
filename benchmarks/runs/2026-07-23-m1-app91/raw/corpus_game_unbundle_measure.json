@@ -1,0 +1,26 @@
+{
+  "label": "corpus_game:folder_unbundle",
+  "command": [
+    "/usr/bin/tar",
+    "-xf",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.restored.tar",
+    "-C",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/restored"
+  ],
+  "start_utc": "2026-07-23T00:58:44.198400Z",
+  "end_utc": "2026-07-23T00:58:44.688119Z",
+  "wall_seconds": 0.48959495799999997,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 4,
+  "peak_process_tree_rss_bytes_sampled": 3850240,
+  "peak_single_process_rss_bytes_sampled": 3850240,
+  "processes_at_peak": [
+    {
+      "pid": 51577,
+      "rss_kb": 3760,
+      "command": "/usr/bin/tar -xf ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/corpus_game.restored.tar -C ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_game/restored"
+    }
+  ]
+}

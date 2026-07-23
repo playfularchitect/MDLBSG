@@ -1,0 +1,29 @@
+{
+  "label": "corpus_sealed:folder_bundle",
+  "command": [
+    "/usr/bin/env",
+    "COPYFILE_DISABLE=1",
+    "/usr/bin/tar",
+    "-cf",
+    "~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.bundle.tar",
+    "-C",
+    "~/Downloads",
+    "corpus_sealed"
+  ],
+  "start_utc": "2026-07-23T01:00:04.062983Z",
+  "end_utc": "2026-07-23T01:00:04.187786Z",
+  "wall_seconds": 0.124706792,
+  "return_code": 0,
+  "timed_out": false,
+  "sample_interval_seconds": 0.1,
+  "memory_samples": 1,
+  "peak_process_tree_rss_bytes_sampled": 294912,
+  "peak_single_process_rss_bytes_sampled": 294912,
+  "processes_at_peak": [
+    {
+      "pid": 52280,
+      "rss_kb": 288,
+      "command": "/usr/bin/tar -cf ~/Downloads/MDLBSG_BENCHMARK_EVIDENCE_2026-07-23_004505Z/work/corpus_sealed/corpus_sealed.bundle.tar -C ~/Downloads corpus_sealed"
+    }
+  ]
+}
