@@ -4,7 +4,7 @@
 
 **An experimental custom compression application for macOS.**
 
-It can compress files and folders, restore MDLBSG archives, and queue additional work while another job is already running.
+It can compress files and folders, restore .mdl archives, and queue additional work while another job is already running.
 
 <br>
 
