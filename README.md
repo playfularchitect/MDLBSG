@@ -69,7 +69,7 @@ The first reproducible public benchmark was recorded on **July 23, 2026** using:
 - **Low Power Mode:** Off
 - **Power source during the run:** Battery
 
-The 4 GiB value is a compressor memory budget, not a macOS-enforced hard ceiling. RAM was sampled across the benchmark command and all descendant processes every 0.10 seconds.
+The 4 GiB value is an arbitrary compressor memory budget, not a macOS enforced hard ceiling. RAM was sampled across the benchmark command and all descendant processes every 0.10 seconds.
 
 | Corpus | Files | Encoder input | Archive | Smaller | Core compression time | Speed | Peak compression RAM | Exact restore |
 |---|---:|---:|---:|---:|---:|---:|---:|:---:|
@@ -79,9 +79,9 @@ The 4 GiB value is a compressor memory budget, not a macOS-enforced hard ceiling
 | `corpus_sealed` | 5 | 45,871,616 B | 42,124,476 B | 8.17% | 7.183 s | 6.09 MiB/s | 1.16 GiB | YES |
 | `corpus_code` | 6,282 | 162,274,304 B | 13,489,866 B | 91.69% | 40.029 s | 3.87 MiB/s | 1.59 GiB | YES |
 
-All five restored outputs matched deterministic source content-and-path manifests exactly.
+All five restored outputs matched deterministic source content and path manifests exactly.
 
-The highest sampled process-tree RAM across both compression and restoration was **2.19 GiB**, during `enwik9` restoration.
+The highest sampled process tree RAM across both compression and restoration was **2.19 GiB**, during `enwik9` restoration.
 
 For folders, **Encoder input** is the deterministic tar bundle passed to the compressor. The evidence package also records source logical bytes, corpus fingerprints, archive hashes, raw logs, restoration measurements, and exact source/restored manifests.
 
@@ -97,7 +97,7 @@ Files and folders can be dragged onto MDLBSG Compressor or selected through the 
 
 ### Restore MDLBSG archives
 
-MDLBSG archives can be dropped onto the application, or double-clicked, to restore their original contents.
+MDLBSG archives can be dropped onto the application, or double clicked, to restore their original contents.
 
 ### Queue multiple jobs
 
@@ -160,7 +160,7 @@ The application will open a progress window and create the compressed archive.
 
 ### Restore something
 
-Drag a supported MDLBSG archive onto **MDLBSG Compressor**, or double-click the `.mdl` archive that appears in your Downloads folder.
+Drag a supported MDLBSG archive onto **MDLBSG Compressor**, or double click the `.mdl` archive that appears in your Downloads folder.
 
 The application will restore the contents of the archive.
 
