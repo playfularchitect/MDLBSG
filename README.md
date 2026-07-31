@@ -54,7 +54,14 @@ A compressor may create a smaller archive by taking hours or using tens of gigab
 |---:|---:|---:|---:|:---:|
 | 1,000,000,000 B | **174,398,752 B** | **291.005 s** | **1,987.9 MB** | **YES** |
 
-
+Compared with familiar everyday compressors
+Using the table’s strongest listed settings:
+7-Zip PPMd: 178,965,454 bytes in 503 seconds using 1.63 GB. We are about 4.6 MB smaller and 1.7× faster, though we use somewhat more RAM.
+xz: 197,331,816 bytes in 5,876 seconds using 6 GB. We are about 22.9 MB smaller, roughly 20× faster, and use much less RAM.
+zstd ultra: 215,674,670 bytes in 701 seconds using 792 MB. We are about 41.3 MB smaller and 2.4× faster, but use more memory.
+bzip2: 253,977,839 bytes in 379 seconds using only 8 MB. We are about 79.6 MB smaller and somewhat faster, but bzip2 is dramatically lighter on memory.
+gzip: 322,591,995 bytes in 101 seconds using almost no RAM. Gzip is about three times faster, but its archive is approximately 148 MB larger.
+These are historical versions and benchmark settings, so modern implementations on modern machines may behave differently. The useful point is the shape of the tradeoff, not a perfect stopwatch comparison.
 ```text
 174,398,752-byte archive
 +   203,959-byte program package
