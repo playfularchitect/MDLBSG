@@ -61,13 +61,13 @@ A compressor may create a smaller archive by taking hours or using tens of gigab
 = 174,602,711-byte final package
 ```
 
-### Resource-aware leaderboard context
+### Resource aware leaderboard context
 
 Using the supplied historical enwik9 table:
 
-- **Size-only placement:** approximately **52nd of 218** after including the program package.
-- **Complete three-metric entries:** **215**.
-- **Three-way Pareto layer:** **Layer 1**.
+- **Size only placement:** approximately **52nd of 218** after including the program package.
+- **Complete three metric entries:** **215**.
+- **Three way Pareto layer:** **Layer 1**.
 - **Compressors that beat MDLBSG on size, time, and RAM simultaneously:** **0**.
 
 “Pareto Layer 1” does not mean MDLBSG wins every individual measurement. It means no listed compressor with complete data is at least as good on all three measurements and strictly better on one.
@@ -82,7 +82,7 @@ For example:
 | `bit` | 174,487,532 B | 2,050 s | 663 MB | Smaller package and less RAM, but about 7× slower |
 
 > [!WARNING]
-> Historical leaderboard timings were collected on different computers and in different eras. They are useful for broad tradeoff context, not as a controlled same-machine speed race. The Pareto analysis is therefore descriptive, not an official leaderboard category or submission.
+> Historical leaderboard timings were collected on different computers and in different eras. They are useful for broad tradeoff context, not as a controlled same machine speed race. The Pareto analysis is therefore descriptive, not an official leaderboard category or submission.
 
 ---
 
@@ -93,7 +93,7 @@ At a high level, the research engine uses two stages:
 1. **Representation transform:** common words become compact symbols, allowing later prediction models to see more useful language within the same history window.
 2. **Predictive compression:** multiple specialized models estimate what comes next, a learned mixer decides which models to trust, and a range coder spends fewer bits on likely events.
 
-Recent work reduced the word-transform stage from roughly three minutes to **13.10 seconds** without changing its output. The improvement came from preserving the same representation while replacing repeated temporary string creation with a more direct counting and lookup body.
+Recent work on the latest private version reduced the word transform stage from roughly three minutes to **13.10 seconds** without changing its output. The improvement came from preserving the same representation while replacing repeated temporary string creation with a more direct counting and lookup body.
 
 The central research goal is straightforward:
 
