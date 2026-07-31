@@ -18,15 +18,20 @@ Compress files and folders, restore `.mdl` archives exactly, and queue additiona
 </div>
 
 > [!NOTE]
-> MDLBSG is an early public release and an active compression research project. The downloadable public app and the newest research champion are described separately below.
+> MDLBSG is an early public release and an active compression research project. The downloadable public app and the newest private research champion (soon to be public) are described separately below.
 
 ## In 10 Seconds
 
 MDLBSG is a lossless compressor: it makes data smaller and can restore every original byte exactly.
 
-On the standard 1,000,000,000-byte `enwik9` Wikipedia benchmark, the newest research engine compressed the file to **174,398,752 bytes in 291 seconds** on an 8 GiB M1 Mac, using about **1.99 GB peak compression RAM**.
 
-That result is not the smallest archive on the historical leaderboard and not the fastest compressor. Its value is the combination: among **215 listed compressors with complete package-size, compression-time, and RAM measurements**, none was simultaneously smaller, faster, and lower-memory than MDLBSG.
+On the standard 1,000,000,000 byte `enwik9` Wikipedia benchmark, the newest research engine compressed the file to **174,398,752 bytes in 291 seconds** on an 8 GiB M1 Mac, using about **1.99 GB peak compression RAM**.
+
+
+That result is not the smallest archive on the historical leaderboard and it is not the fastest compressor. 
+
+
+Its value is the combination: among **215 listed compressors with complete package size, compression time, and RAM measurements**, none are simultaneously smaller, faster, and lower memory than MDLBSG.
 
 > [!IMPORTANT]
 > The **174 MB research champion is not yet the same engine shipped in the v0.1 public app**. The current downloadable release remains App 91, documented below.
