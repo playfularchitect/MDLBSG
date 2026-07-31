@@ -38,7 +38,7 @@ Its value is the combination: among **215 listed compressors with complete packa
 
 ---
 
-## Why This Is Interesting
+## Why I Find This Interesting
 
 Compression always trades between three costs:
 
