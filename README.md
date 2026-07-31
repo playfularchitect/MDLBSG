@@ -54,9 +54,6 @@ A compressor may create a smaller archive by taking hours or using tens of gigab
 |---:|---:|---:|---:|:---:|
 | 1,000,000,000 B | **174,398,752 B** | **291.005 s** | **1,987.9 MB** | **YES** |
 
-The complete chain includes the word transform and the main compressor. The transform took **13.10 seconds** and produced the same **636,828,772 transformed bytes** as the legacy transform. The main compressor took **277.90 seconds**.
-
-For leaderboard-style accounting that includes the reproducible program package:
 
 ```text
 174,398,752-byte archive
