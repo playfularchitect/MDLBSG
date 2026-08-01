@@ -61,7 +61,7 @@ A compressor may create a smaller archive by taking hours or using tens of gigab
 = 174,602,711-byte final package
 ```
 
-### Resource aware leaderboard context
+### Leaderboard context
 
 Using Matt Mahoney's [Large Text Compression Benchmark](http://www.mattmahoney.net/dc/text.html), which supplies the compressor list and historical enwik9 measurements:
 
