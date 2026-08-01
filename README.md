@@ -63,7 +63,7 @@ A compressor may create a smaller archive by taking hours or using tens of gigab
 
 ### Resource aware leaderboard context
 
-Using the supplied historical enwik9 table:
+Using Matt Mahoney's [Large Text Compression Benchmark](http://www.mattmahoney.net/dc/text.html), which supplies the compressor list and historical enwik9 measurements:
 
 - **Size only placement:** approximately **52nd of 218** after including the program package.
 - **Complete three metric entries:** **215**.
